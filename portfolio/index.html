@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio — Muhammad Arifin Alqi. AB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursor-follower"></div>
+
+<!-- Noise overlay -->
+<div class="noise"></div>
+
+<div id="app">
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a class="nav-brand" href="#">
+                <span class="brand-dot"></span>
+                MAA
+            </a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#certificates" class="nav-link">Certificates</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="nav-mobile" id="navMobile">
+            <a href="#home" class="nav-link-mobile">Home</a>
+            <a href="#about" class="nav-link-mobile">About</a>
+            <a href="#certificates" class="nav-link-mobile">Certificates</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="grid-lines"></div>
+        </div>
+
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="hero-tag reveal">
+                    <span class="tag-dot"></span>
+                    Mahasiswa Aktif · Angkatan 2024
+                </div>
+                <h1 class="hero-name reveal reveal-delay-1">
+                    Muhammad<br>
+                    <em>Arifin Alqi.</em><br>
+                    <span class="name-suffix">AB</span>
+                </h1>
+                <p class="hero-desc reveal reveal-delay-2">
+                    Sistem Informasi · Universitas Mulawarman<br>
+                    Passionate about web development & digital technology.
+                </p>
+                <div class="hero-actions reveal reveal-delay-3">
+                    <a href="#about" class="btn-primary">Tentang Saya</a>
+                    <a href="#certificates" class="btn-ghost">Lihat Sertifikat</a>
+                </div>
+            </div>
+
+            <div class="hero-visual reveal reveal-delay-2">
+                <div class="profile-frame">
+                    <div class="profile-ring"></div>
+                    <img src="assets/profile.jpeg" alt="Muhammad Arifin Alqi" class="profile-photo">
+                    <div class="profile-badge">
+                        <span>SI</span>
+                        <small>Unmul</small>
+                    </div>
+                </div>
+                <div class="floating-card card-1">
+                    <span class="fc-icon">💻</span>
+                    <div>
+                        <div class="fc-title">Web Dev</div>
+                        <div class="fc-sub">HTML · CSS · JS</div>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <span class="fc-icon">🗄️</span>
+                    <div>
+                        <div class="fc-title">Database</div>
+                        <div class="fc-sub">MySQL · 70%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">01 — About</span>
+                <h2 class="section-title">Kenali <em>Saya</em></h2>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p class="about-lead">
+                        Saya adalah mahasiswa Sistem Informasi yang memiliki minat besar dalam pengembangan web dan teknologi digital.
+                    </p>
+                    <p>
+                        Saya senang mempelajari hal-hal baru dan membangun project berbasis web untuk terus meningkatkan kemampuan pemrograman saya. Aktif dalam kegiatan kampus dan selalu berusaha memberikan yang terbaik dalam setiap proyek yang dikerjakan.
+                    </p>
+
+                    <div class="experience-list">
+                        <h4>Pengalaman</h4>
+                        <div class="exp-item reveal">
+                            <div class="exp-icon">🌐</div>
+                            <span>Membuat project website portfolio</span>
+                        </div>
+                        <div class="exp-item reveal">
+                            <div class="exp-icon">⚡</div>
+                            <span>Mengerjakan mini project berbasis web</span>
+                        </div>
+                        <div class="exp-item reveal">
+                            <div class="exp-icon">🤝</div>
+                            <span>Aktif dalam kegiatan organisasi kampus</span>
+                        </div>
+                        <div class="exp-item reveal">
+                            <div class="exp-icon">🔍</div>
+                            <span>Pelatihan Aplikasi FTK Imager dan Autopsy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-panel reveal">
+                    <h4>Skills</h4>
+                    <div class="skill-item" v-for="skill in skills" :key="skill.name">
+                        <div class="skill-info">
+                            <span class="skill-name">{{ skill.name }}</span>
+                            <span class="skill-level">{{ skill.level }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" :data-width="skill.level" :style="{ width: skill.level + '%' }"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates -->
+    <section id="certificates" class="certificates">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">02 — Certificates</span>
+                <h2 class="section-title">Pencapaian <em>Saya</em></h2>
+            </div>
+
+            <div class="certs-grid">
+                <div class="cert-card reveal" v-for="(cert, index) in certificates" :key="cert.title" :style="{ animationDelay: index * 0.1 + 's' }">
+                    <div class="cert-img-wrap">
+                        <img :src="cert.image" :alt="cert.title" class="cert-img">
+                        <div class="cert-overlay">
+                            <span class="cert-overlay-text">{{ cert.title }}</span>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-number">0{{ index + 1 }}</div>
+                        <h5 class="cert-title">{{ cert.title }}</h5>
+                        <p class="cert-issuer">{{ cert.issuer }}</p>
+                        <div class="cert-tag">{{ cert.tag }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">MAA</div>
+            <div class="footer-info">
+                <p>Muhammad Arifin Alqi. AB</p>
+                <p>Sistem Informasi · Universitas Mulawarman · © 2026</p>
+            </div>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Vue 3 -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
