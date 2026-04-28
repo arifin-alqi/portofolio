@@ -141,7 +141,7 @@ createApp({
                     status: "done",
                     image: "assets/portfolio.png",  
                     color: "#4af0c4",
-                    demo: "lallalallalal",
+                    demo: "https://arifin-alqi.github.io/Portofolio/portfolio/",
                     github: ""
                 },
                 {
