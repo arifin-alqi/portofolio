@@ -23,11 +23,12 @@
         <div class="nav-container">
             <a class="nav-brand" href="#">
                 <span class="brand-dot"></span>
-                MAA
+                PORTOFOLIO
             </a>
             <div class="nav-links">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
                 <a href="#certificates" class="nav-link">Certificates</a>
             </div>
             <button class="nav-toggle" id="navToggle">
@@ -37,6 +38,7 @@
         <div class="nav-mobile" id="navMobile">
             <a href="#home" class="nav-link-mobile">Home</a>
             <a href="#about" class="nav-link-mobile">About</a>
+            <a href="#projects" class="nav-link-mobile">Projects</a>
             <a href="#certificates" class="nav-link-mobile">Certificates</a>
         </div>
     </nav>
@@ -157,11 +159,93 @@
         </div>
     </section>
 
+    <!-- Projects -->
+    <section id="projects" class="projects">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <span class="section-label">02 — Projects</span>
+                <h2 class="section-title">Karya <em>Saya</em></h2>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="project-filters reveal">
+                <button class="filter-btn active" @click="setFilter('all')">Semua</button>
+                <button class="filter-btn" @click="setFilter('web')" :class="{ active: activeFilter === 'web' }">Web Dev</button>
+                <button class="filter-btn" @click="setFilter('data')" :class="{ active: activeFilter === 'data' }">Data</button>
+                <button class="filter-btn" @click="setFilter('other')" :class="{ active: activeFilter === 'other' }">Lainnya</button>
+            </div>
+
+            <div class="projects-grid">
+                <div
+                    class="project-card reveal"
+                    v-for="(project, index) in filteredProjects"
+                    :key="project.title"
+                    :style="{ animationDelay: index * 0.1 + 's' }"
+                >
+                    <!-- Gambar / Placeholder -->
+                    <div class="project-img-wrap">
+                        <img
+                            v-if="project.image"
+                            :src="project.image"
+                            :alt="project.title"
+                            class="project-img"
+                        >
+                        <div v-else class="project-placeholder" :style="{ '--ph-color': project.color }">
+                            <span class="ph-icon">{{ project.icon }}</span>
+                            <span class="ph-label">Screenshot belum tersedia</span>
+                            <span class="ph-sub">Ganti dengan: assets/projects/nama-file.jpg</span>
+                        </div>
+                        <!-- Overlay hover -->
+                        <div class="project-img-overlay">
+                            <div class="overlay-actions">
+                                <a v-if="project.demo" :href="project.demo" target="_blank" class="overlay-btn">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                    Live Demo
+                                </a>
+                                <a v-if="project.github" :href="project.github" target="_blank" class="overlay-btn overlay-btn-ghost">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                                    GitHub
+                                </a>
+                                <span v-if="!project.demo && !project.github" class="overlay-soon">🔒 Coming Soon</span>
+                            </div>
+                        </div>
+                        <!-- Status badge di atas gambar -->
+                        <div class="project-status-badge" :class="'status-' + project.status">
+                            <span class="status-dot"></span>
+                            {{ project.status === 'done' ? 'Selesai' : project.status === 'wip' ? 'Dalam Proses' : 'Konsep' }}
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="project-body">
+                        <div class="project-card-top">
+                            <div class="project-icon-wrap">
+                                <span>{{ project.icon }}</span>
+                            </div>
+                            <div class="project-number">{{ String(index + 1).padStart(2, '0') }}</div>
+                        </div>
+                        <h5 class="project-title">{{ project.title }}</h5>
+                        <p class="project-desc">{{ project.description }}</p>
+                        <div class="project-tags">
+                            <span class="project-tag" v-for="tech in project.tech" :key="tech">{{ tech }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty state -->
+            <div v-if="filteredProjects.length === 0" class="projects-empty">
+                <span>🔍</span>
+                <p>Tidak ada proyek di kategori ini.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Certificates -->
     <section id="certificates" class="certificates">
         <div class="section-container">
             <div class="section-header reveal">
-                <span class="section-label">02 — Certificates</span>
+                <span class="section-label">03 — Certificates</span>
                 <h2 class="section-title">Pencapaian <em>Saya</em></h2>
             </div>
 

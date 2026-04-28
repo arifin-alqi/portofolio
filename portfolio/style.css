@@ -575,6 +575,304 @@ body {
 }
 
 /* =============================================
+   PROJECTS
+   ============================================= */
+.projects {
+    background: var(--bg-2);
+    position: relative;
+}
+.projects::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+}
+
+/* Filter Tabs */
+.project-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+}
+.filter-btn {
+    padding: 8px 22px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s var(--transition);
+    letter-spacing: 0.04em;
+}
+.filter-btn:hover {
+    border-color: var(--border-bright);
+    color: var(--text);
+}
+.filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s var(--transition);
+}
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--border-bright);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+
+/* ---- Gambar / Placeholder ---- */
+.project-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.project-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s var(--transition);
+}
+.project-card:hover .project-img { transform: scale(1.06); }
+
+/* Placeholder bergradient saat belum ada gambar */
+.project-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background:
+        linear-gradient(135deg,
+            color-mix(in srgb, var(--ph-color) 12%, var(--bg-3)),
+            var(--bg-3) 70%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+/* Grid pattern di placeholder */
+.project-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+/* Lingkaran glow di tengah */
+.project-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--ph-color), transparent 70%);
+    opacity: 0.18;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.ph-icon {
+    font-size: 36px;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 0 12px var(--ph-color));
+    transition: transform 0.4s var(--transition);
+}
+.project-card:hover .ph-icon { transform: scale(1.15) rotate(-5deg); }
+.ph-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+.ph-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: 'Courier New', monospace;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 16px;
+}
+
+/* Overlay muncul saat hover */
+.project-img-overlay {
+    position: absolute; inset: 0;
+    background: rgba(8, 12, 16, 0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.35s var(--transition);
+    backdrop-filter: blur(4px);
+}
+.project-card:hover .project-img-overlay { opacity: 1; }
+.overlay-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 20px;
+}
+.overlay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 20px;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+.overlay-btn:hover { background: #6af5d0; transform: scale(1.05); }
+.overlay-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    color: var(--text);
+}
+.overlay-btn-ghost:hover { background: rgba(255,255,255,0.08); transform: scale(1.05); }
+.overlay-soon {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+/* Status badge di atas gambar (pojok kiri atas) */
+.project-status-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+}
+.status-done {
+    background: rgba(74, 240, 196, 0.15);
+    border: 1px solid rgba(74, 240, 196, 0.35);
+    color: var(--accent);
+}
+.status-wip {
+    background: rgba(240, 164, 74, 0.15);
+    border: 1px solid rgba(240, 164, 74, 0.35);
+    color: var(--accent-warm);
+}
+.status-concept {
+    background: rgba(122, 143, 166, 0.15);
+    border: 1px solid rgba(122, 143, 166, 0.35);
+    color: var(--text-muted);
+}
+.status-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+}
+
+/* ---- Body teks ---- */
+.project-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.project-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+.project-icon-wrap {
+    width: 40px; height: 40px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.project-number {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+}
+.project-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+.project-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    flex: 1;
+}
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.project-tag {
+    padding: 3px 10px;
+    background: rgba(61, 127, 255, 0.08);
+    border: 1px solid rgba(61, 127, 255, 0.2);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--accent-2);
+    font-weight: 500;
+}
+
+/* Empty state */
+.projects-empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+}
+.projects-empty span { font-size: 48px; display: block; margin-bottom: 16px; }
+.projects-empty p { font-size: 15px; }
+
+/* =============================================
    CERTIFICATES
    ============================================= */
 .certificates {
@@ -741,6 +1039,9 @@ body {
         grid-template-columns: 1fr;
         gap: 40px;
     }
+    .projects-grid {
+        grid-template-columns: 1fr 1fr;
+    }
     .certs-grid {
         grid-template-columns: 1fr;
     }
@@ -756,6 +1057,7 @@ body {
 
 @media (max-width: 600px) {
     .certs-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
     .profile-frame { width: 220px; height: 220px; }
     .nav-container { padding: 0 24px; }
     .nav-mobile { padding: 20px 24px; }

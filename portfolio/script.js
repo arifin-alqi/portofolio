@@ -124,11 +124,74 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
+            activeFilter: 'all',
             skills: [
                 { name: "HTML, CSS, JavaScript", level: 50 },
                 { name: "MySQL",                 level: 70 },
                 { name: "Kolaborasi Tim",        level: 75 },
                 { name: "Problem Solving",       level: 80 }
+            ],
+            projects: [
+                {
+                    title: "Website Portfolio Pribadi",
+                    description: "Portofolio personal yang menampilkan profil, skills, proyek, dan sertifikat. Dibangun dengan HTML, CSS, JavaScript, dan Vue 3.",
+                    icon: "🌐",
+                    tech: ["HTML", "CSS", "JavaScript", "Vue 3"],
+                    category: "web",
+                    status: "done",
+                    image: "assets/portfolio.png",  
+                    color: "#4af0c4",
+                    demo: "lallalallalal",
+                    github: ""
+                },
+                {
+                    title: "Mini Project Web Statis",
+                    description: "Kumpulan mini project berbasis web statis untuk melatih kemampuan HTML dan CSS, termasuk landing page dan form sederhana.",
+                    icon: "📄",
+                    tech: ["HTML", "CSS"],
+                    category: "web",
+                    status: "done",
+                    image: "assets/github.png",
+                    color: "#3d7fff",
+                    demo: "",
+                    github: "https://github.com/arifin-alqi"
+                },
+                {
+                    title: "Database Manajemen Sederhana",
+                    description: "Project manajemen data menggunakan MySQL, mencakup desain skema tabel, relasi antar tabel, dan query CRUD dasar.",
+                    icon: "🗄️",
+                    tech: ["MySQL"],
+                    category: "data",
+                    status: "done",
+                    image: "assets/database.png",
+                    color: "#f0a44a",
+                    demo: "",
+                    github: ""
+                },
+                {
+                    title: "Analisis dan Visualisasi Data",
+                    description: "Latihan analisis dan visualisasi data menggunakan tools google coleb dengan bahasa Python untuk memahami konsep dasar data science.",
+                    icon: "📊",
+                    tech: ["Data Science", "Microsoft Fabric"],
+                    category: "data",
+                    status: "wip",
+                    image: "assets/dataset.png",
+                    color: "#a855f7",
+                    demo: "https://colab.research.google.com/drive/1OzP9Ddz7Jd8NLBe1Z0MOGLLATMl0I2iu?usp=sharing",
+                    github: ""
+                },
+                {
+                    title: "Aplikasi Pegadaian Sederhana",
+                    description: "Aplikasi manajemen pencatatan barang yang di gadai dalam jumlah kecil maupun besar.",
+                    icon: "✅",
+                    tech: ["DART", "CSS"],
+                    category: "Aplikasi",
+                    status: "done",
+                    image: "assets/aplikasi.png",
+                    color: "#22c55e",
+                    demo: "https://drive.google.com/drive/folders/1lEjUa3a8-hCwxYUBF2h_gKcbQGXuTS-e?usp=sharing",
+                    github: ""
+                },
             ],
             certificates: [
                 {
@@ -148,9 +211,47 @@ createApp({
                     issuer: "Universitas Mulawarman · November 2025",
                     image: "assets/cert3.jpeg",
                     tag: "Digital Forensics"
-                }
+                },
+                {
+                    title: "Juara 3 Lomba Mobile Legends",
+                    issuer: "Universitas Mulawarman · Mei 2025",
+                    image: "assets/cert4.jpg",
+                    tag: "Esports"
+                },
+                {
+                    title: "Pelatihan Aplikasi Autopsy",
+                    issuer: "Universitas Mulawarman · April 2025",
+                    image: "assets/cert5.jpg",
+                    tag: "Acara Kampus"
+                },
+                {
+                    title: "Pelatihan Aplikasi Autopsy",
+                    issuer: "Universitas Mulawarman · November 2025",
+                    image: "assets/cert6.jpg",
+                    tag: "Acara Kampus"
+                },
+                
             ]
         };
+    },
+
+    computed: {
+        filteredProjects() {
+            if (this.activeFilter === 'all') return this.projects;
+            return this.projects.filter(p => p.category === this.activeFilter);
+        }
+    },
+
+    methods: {
+        setFilter(filter) {
+            this.activeFilter = filter;
+            // Re-observe newly rendered elements after filter
+            this.$nextTick(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    revealObserver.observe(el);
+                });
+            });
+        }
     },
 
     mounted() {
